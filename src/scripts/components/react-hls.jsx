@@ -49,9 +49,9 @@ class ReactHls extends React.Component {
         });
         
         
-        hls.on(Hls.Events.LEVEL_LOADED, () => {
+        hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
             if (loaded) {
-                loaded();
+                loaded(event, data);
             }
         });
 
