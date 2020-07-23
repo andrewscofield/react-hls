@@ -36,7 +36,7 @@ class ReactHls extends React.Component {
             this.hls.destroy();
         }
 
-        let { url, autoplay, hlsConfig } = this.props;
+        let { url, autoplay, hlsConfig, loaded } = this.props;
         let { video : $video } = this.refs;
         let hls = new Hls(hlsConfig);
 
@@ -45,6 +45,13 @@ class ReactHls extends React.Component {
         hls.on(Hls.Events.MANIFEST_PARSED, () => {
             if (autoplay) {
                 $video.play();
+            }
+        });
+        
+        
+        hls.on(Hls.Events.LEVEL_LOADED, () => {
+            if (loaded) {
+                loaded();
             }
         });
 
@@ -78,6 +85,7 @@ ReactHls.propTypes = {
     width : PropTypes.number,
     height : PropTypes.number,
     poster : PropTypes.string,
+    loaded: PropTypes.func,
     videoProps : PropTypes.object
 }
 
